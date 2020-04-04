@@ -49,3 +49,33 @@
   .category-all-page .category-list-child {
     padding-left: 10px;
   }
+  
+  /*头像旋转*/
+#ds-reset .ds-avatar img{
+width:124px;height:124px; /*图像的长和宽*/
+border:5px solid #fff;
+border-radius: 62px;/*设置图像圆角效果,设置了超过width/2的像素，即为圆形*/
+-webkit-border-radius: 62px;/*圆角效果：兼容webkit浏览器*/
+-moz-border-radius:62px;
+box-shadow: inset 0 -1px 0 #3333sf;/*设置图像阴影效果*/
+-webkit-box-shadow: inset 0 -1px 0 #3333sf;
+-webkit-transition: 0.8s;
+-webkit-transition: -webkit-transform 0.8s ease-out;
+transition: transform 0.8s ease-out;/*变化时间设置为0.8秒(变化动作即为下面的图像旋转360度）*/
+-moz-transition: -moz-transform 0.8s ease-out;
+}
+#ds-reset .ds-avatar img:hover{/*鼠标悬浮在头像时的CSS样式*/
+transform: rotateZ(360deg);/*图像旋转360度*/
+-webkit-transform: rotateZ(360deg);
+-moz-transform: rotateZ(360deg);
+}
+
+/**头像圆角*/
+#ds-reset .ds-avatar img{
+width:124px;height:124px; /*设置图像的长和宽*/
+border-radius: 62px;/*设置图像圆角效果*/
+-webkit-border-radius: 62px;/*圆角效果*/
+-moz-border-radius:62px;
+box-shadow: inset 0 -1px 0 #3333sf;/*设置图像阴影效果*/
+-webkit-box-shadow: inset 0 -1px 0 #3333sf;
+}
