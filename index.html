@@ -79,7 +79,7 @@
             
 		</nav>
 		<nav>
-              <font size="1" color="#4d4d4d">总文章数: 3</font>
+              <font size="1" color="#4d4d4d">总文章数: 4</font>
            </nav>
 		
 		<nav class="header-nav">
@@ -260,6 +260,238 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/08/Hexo%E5%91%BD%E4%BB%A4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-阿里云K8S托管版配置及部署" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/">阿里云K8S托管版配置及部署</a>
+    </h1>
+  
+
+        
+        
+<a href="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/" class="archive-article-date">
+  	<time datetime="2020-07-08T10:56:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-08</time>
+</a>
+		<!-- 需要添加的位置 -->
+        <!-- 开始添加字数统计-->
+        
+          <div style="margin-top:10px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">1.1k字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">3分</span>
+      </span>
+    </span>
+</div>
+          
+        <!-- 添加完成 -->
+        
+      </header>
+    	
+	
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p>kubernetes官方文档：<a href="https://kubernetes.io/docs/home/" target="_blank" rel="noopener">https://kubernetes.io/docs/home/</a><br>kubernates中文文档：<a href="http://docs.kubernetes.org.cn/" target="_blank" rel="noopener">http://docs.kubernetes.org.cn/</a><br>阿里云容器服务k8s版文档：<a href="https://help.aliyun.com/product/85222.html?spm=a2c4g.11186623.6.540.6c874c078ZtIcw" target="_blank" rel="noopener">https://help.aliyun.com/product/85222.html?spm=a2c4g.11186623.6.540.6c874c078ZtIcw</a></p>
+<h2 id><a href="#" class="headerlink" title></a></h2><h2 id="创建k8s托管版"><a href="#创建k8s托管版" class="headerlink" title="创建k8s托管版"></a>创建k8s托管版</h2><h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h3><ul>
+<li>开通容器服务Kubernetes</li>
+<li>登录RAM管理控制台开通相应服务(授权)</li>
+<li>开通弹性伸缩服务</li>
+<li>同一地域中2台以上阿里云ECS</li>
+<li>创建专有网络</li>
+<li>创建虚拟交换机</li>
+<li>账户余额≥100元</li>
+</ul>
+<h3 id="创建入口"><a href="#创建入口" class="headerlink" title="创建入口"></a>创建入口</h3><p>进入服务容器服务控制台<br><a href="https://cs.console.aliyun.com/?#/k8s/cluster/list" target="_blank" rel="noopener">https://cs.console.aliyun.com/?#/k8s/cluster/list</a></p>
+<p>![image-20200707164853341.png)</p>
+<p>集群列表页中点击注册集群 ，进入创建页面</p>
+<h3 id="集群配置"><a href="#集群配置" class="headerlink" title="集群配置"></a>集群配置</h3><ul>
+<li>创建类型为Kubernetes托管版</li>
+<li>kubernetes及容器选择 k8s 选 1.16.9-aliyun.1(目前较高版本) 容器选择docker</li>
+<li>需要创建专有网络和虚拟交换机</li>
+<li>网络插件选择Terway 并选择Pod 虚拟交换机</li>
+<li>service CIDR 网段，Pod的ip因为数量、伸缩等客观因素，需要有service进行ip:port映射并对外暴露，需要单独配置，如果需要创建多个集群 需要规划一下网段</li>
+</ul>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594087794015-d7bca4f2-2143-4765-bcd6-05d11b5cc569.png" alt="image.png"><br><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594088414674-bf500118-e140-426c-b4ff-36447e25de24.png" alt="image.png"></p>
+<h3 id="worker配置"><a href="#worker配置" class="headerlink" title="worker配置"></a>worker配置</h3><ul>
+<li>添加节点实例 实例创建需要考虑Terway兼容性 即可支持Pod数量  查看方法可选择新增实例中实例列表查看可支持pod数量</li>
+</ul>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594089704812-b27c6b76-3a53-4529-ac94-1f1310429cf4.png" alt="image.png"></p>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594091618803-d61484f0-2e63-4519-9487-1a4d5bf5617c.png" alt="image.png"></p>
+<h3 id="组件配置"><a href="#组件配置" class="headerlink" title="组件配置"></a>组件配置</h3><ul>
+<li>ingress插件 建议公网，后续服务可通过ingress 进行映射</li>
+<li>日志服务 建议选择已有project  <a href="https://sls.console.aliyun.com/lognext/profile" target="_blank" rel="noopener">创建project</a></li>
+</ul>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594093603109-1aa5e4b9-962f-4f3e-92d2-26c2fcc6799d.png" alt="image.png"></p>
+<h2 id="应用部署"><a href="#应用部署" class="headerlink" title="应用部署"></a>应用部署</h2><h3 id="部署方式"><a href="#部署方式" class="headerlink" title="部署方式"></a>部署方式</h3><p>采用镜像-分批发布方式发布<br>发布流程 创建阿里云镜像 –&gt;创建分批发布–&gt; 第一次发布–&gt; 发布回滚/发布完成</p>
+<h3 id="创建阿里云镜像"><a href="#创建阿里云镜像" class="headerlink" title="创建阿里云镜像"></a>创建阿里云镜像</h3><p><a href="https://cr.console.aliyun.com/cn-hangzhou/instances/repositories" target="_blank" rel="noopener">阿里云镜像服务控制台</a></p>
+<ul>
+<li>创建命名空间</li>
+</ul>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594094666837-e67d4857-80ff-400c-8642-d6b4a8fc8836.png" alt="image.png"></p>
+<ul>
+<li>创建镜像仓库<ul>
+<li>选择本地仓库，使用命令推送镜像到镜像仓库</li>
+<li>点击对应仓库名称，仓库详情中有操作指南可以参考</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594094837178-7acbcd17-43eb-4d33-931d-9ead74e9bc8a.png" alt="image.png"></p>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594094913726-af8b687a-4944-41bd-ae07-0923240118f2.png" alt="image.png"><br><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594095031809-a664ecee-191d-4f46-b809-7b86cd831d4a.png" alt="image.png"></p>
+<h3 id="创建分批发布"><a href="#创建分批发布" class="headerlink" title="创建分批发布"></a>创建分批发布</h3><ul>
+<li>创建分批发布<ul>
+<li>分批发布信息</li>
+<li>分批发布配置<ul>
+<li>选择镜像</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>可以从已创建的阿里云镜像中选择镜像及版本</p>
+<ul>
+<li>服务暴露</li>
+</ul>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594103703754-914cc08c-140e-460e-9499-9d78f23e7b87.png" alt="image.png"><br><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594103759355-12573398-e522-4342-ba4b-73dd9d097868.png" alt="image.png"></p>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594104093663-75fa1e5c-9fe8-4d82-a8b6-e5964f762fe8.png" alt="image.png"><br><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594105036671-8d9a5a71-d03e-4176-92e3-1df0fabc33dc.png" alt="image.png"><br><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594105106327-48f73739-c4e1-4ee2-8952-09160fe8be54.png" alt="image.png"></p>
+<h3 id="发布更新"><a href="#发布更新" class="headerlink" title="发布更新"></a>发布更新</h3><p>已创建的服务，可以通过更新重新拉取新的镜像更新</p>
+<ul>
+<li>变更</li>
+<li>第一次发布</li>
+<li>发布完成</li>
+</ul>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594105309826-f81f2e74-b4fa-40ca-a22a-37533cda613e.png" alt="image.png"></p>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594105422644-c6e5462a-da34-4599-a08d-4a60ee903618.png" alt="image.png"></p>
+<h3 id="发布过程"><a href="#发布过程" class="headerlink" title="发布过程"></a>发布过程</h3><p>发布详情页面中会有发布进度，点击列表详情可以查看<br>开始发布时，如果有正在运行的pod,第一次发布则会首先更新重启其中一个pod，第一个pod发布完成之后，等待确认第二次发布，此时如果确认没有问题，则点击“继续”按钮进行第二次发布，则其他剩余pod继续更新重启。等待全部pod启动完成，点击“完成”按钮，服务更新完成，每次发布，pod应用版本+1。可通过应用版本判断pod是否是最新版本。<br><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594105556755-3e87cf13-ae9d-4947-8cc1-f55aa0598545.png" alt="image.png"><br><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594105629121-1adc593c-ff7f-4dee-b681-9663aad0f504.png" alt="image.png"></p>
+<h3 id="服务访问方式"><a href="#服务访问方式" class="headerlink" title="服务访问方式"></a>服务访问方式</h3><h4 id="通过服务配置SLB访问"><a href="#通过服务配置SLB访问" class="headerlink" title="通过服务配置SLB访问"></a>通过服务配置SLB访问</h4><ul>
+<li>应用列表中选择服务进入详情</li>
+<li>选择访问tab 创建或更新对应service</li>
+<li>可选择已有也可选择新建</li>
+<li>注意选择关联</li>
+</ul>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594106835192-be5ab629-037b-4290-8348-b3d1ff2ccd08.png" alt="image.png"></p>
+<h4 id="通过路由配置策略访问"><a href="#通过路由配置策略访问" class="headerlink" title="通过路由配置策略访问"></a>通过路由配置策略访问</h4><ul>
+<li>需要集群创建时安装ingress插件，且有公网访问权限</li>
+</ul>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594106924764-c2244aee-54fc-46ec-8531-12d7b261e8c4.png" alt="image.png"></p>
+<h3 id="水平伸缩"><a href="#水平伸缩" class="headerlink" title="水平伸缩"></a>水平伸缩</h3><ul>
+<li>从应用列表中选择应用进入详情</li>
+<li>点击进入容器组水平伸缩器tab</li>
+<li>点击HPA创建按钮</li>
+<li>点击指标“+”按钮添加指标，可选指标：CPU使用量、内存使用量</li>
+</ul>
+<p><img src="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/1594107103670-6d462562-48b0-4c8f-863e-4d694830e96a.png" alt="image.png"></p>
+<h3 id="尝试建议"><a href="#尝试建议" class="headerlink" title="尝试建议"></a>尝试建议</h3><p>如果有兴趣的小伙伴想要自己尝试一下，一些省钱的建议参考下</p>
+<ul>
+<li>ECS</li>
+</ul>
+<p>ECS可以选择抢占式按时按量付费 如 g6e 单台每小时大约0.3元</p>
+<ul>
+<li>负载均衡</li>
+</ul>
+<p>可以选择按量付费，通过阿里云控制台操作k8s时 走的是内网的负载均衡，流量费加上每小时收费每天差不多十块钱左右</p>
+<ul>
+<li>域名</li>
+</ul>
+<p>几十块钱三五年的可以考虑买一个，但是如果想要访问需要备案，阿里云会提供备案幕布<br>服务启动的时候可以把自己的域名解析到负载均衡的公网ip上 再通过路由对二级域名分发到不同的服务，方便访问</p>
+
+      
+	  
+	  
+
+<!-- 增加版权声明 -->
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+
+<!-- 增加版权声明结束 -->
+	  
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        <div class="article-pop-out tagcloud">
+          <i class="icon-tuding"></i>
+          <a class="article-tag-list-link color3">置顶</a>
+        </div>
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">k8s</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/工作//" class="article-tag-list-link color3">工作</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/工作/运维//" class="article-tag-list-link color3">运维</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/">展开全文 >></a>
         </p>
       
 
@@ -670,11 +902,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">开发工具使用</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+                <a href="javascript:void(0)" class="js-tag color4">k8s</a>
               </li>
             
             <div class="clearfix"></div>
