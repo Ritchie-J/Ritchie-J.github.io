@@ -6,18 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://Ritchie-J.github.io">
-  <title>Hexo命令 | 流苏的个人博客</title>
+  <title>观察者模式详解 | 流苏的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1、创建文章   进入hexo目录下的_post目录,如D:\Hexo\Blog\source_posts。输入命令hexo new “文章标题”。在这个目录下则会出现这个文件并包含储存对应文章图片的文件夹。">
+  <meta name="description" content="1、模式动机及定义：   建立一种对象与对象之间的依赖关系，一个对象发生改变时将自动通知其他对象，其他对象将相应做出反应。在此，发生改变的对象称为观察目标，而被通知的对象称为观察者，一个观察目标可以对应多个观察者，而且这些观察者之间没有相互联系，可以根据需要增加和删除观察者，使得系统更易于扩展，这就是观察者模式的模式动机。   观察者模式(Observer Pattern)：定义对象间的一种一对多">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo命令">
-<meta property="og:url" content="https://ritchie-j.github.io/2020/07/08/Hexo%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:title" content="观察者模式详解">
+<meta property="og:url" content="https://ritchie-j.github.io/2020/07/08/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="流苏的个人博客">
-<meta property="og:description" content="1、创建文章   进入hexo目录下的_post目录,如D:\Hexo\Blog\source_posts。输入命令hexo new “文章标题”。在这个目录下则会出现这个文件并包含储存对应文章图片的文件夹。">
-<meta property="article:published_time" content="2020-07-08T10:56:39.000Z">
-<meta property="article:modified_time" content="2020-07-08T11:20:27.338Z">
+<meta property="og:description" content="1、模式动机及定义：   建立一种对象与对象之间的依赖关系，一个对象发生改变时将自动通知其他对象，其他对象将相应做出反应。在此，发生改变的对象称为观察目标，而被通知的对象称为观察者，一个观察目标可以对应多个观察者，而且这些观察者之间没有相互联系，可以根据需要增加和删除观察者，使得系统更易于扩展，这就是观察者模式的模式动机。   观察者模式(Observer Pattern)：定义对象间的一种一对多">
+<meta property="article:published_time" content="2020-07-08T14:11:57.000Z">
+<meta property="article:modified_time" content="2020-07-08T14:17:50.211Z">
 <meta property="article:author" content="流苏">
-<meta property="article:tag" content="开发工具使用">
+<meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="流苏的个人博客" type="application/atom+xml">
@@ -155,14 +155,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Hexo命令" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-观察者模式详解" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hexo命令
+      观察者模式详解
     </h1>
   
 
@@ -173,8 +173,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/07/08/Hexo%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-  	<time datetime="2020-07-08T10:56:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-08</time>
+<a href="/2020/07/08/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2020-07-08T14:11:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-08</time>
 </a>
 		<!-- 需要添加的位置 -->
         <!-- 开始添加字数统计-->
@@ -184,7 +184,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">202字</span>
+        <span class="post-count">1.4k字</span>
       </span>
     </span>
 
@@ -193,7 +193,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1分</span>
+        <span class="post-count">5分</span>
       </span>
     </span>
 </div>
@@ -205,17 +205,51 @@
 	
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1、创建文章</p>
-<p>  进入hexo目录下的_post目录,如D:\Hexo\Blog\source_posts。输入命令hexo new “文章标题”。在这个目录下则会出现这个文件并包含储存对应文章图片的文件夹。</p>
-<a id="more"></a>
+        <p>1、模式动机及定义：</p>
+<p>  建立一种对象与对象之间的依赖关系，一个对象发生改变时将自动通知其他对象，其他对象将相应做出反应。在此，发生改变的对象称为观察目标，而被通知的对象称为观察者，一个观察目标可以对应多个观察者，而且这些观察者之间没有相互联系，可以根据需要增加和删除观察者，使得系统更易于扩展，这就是观察者模式的模式动机。</p>
+<p>  观察者模式(Observer Pattern)：定义对象间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象皆得到通知并被自动更新。观察者模式又叫做发布-订阅（Publish/Subscribe）模式、模型-视图（Model/View）模式、源-监听器（Source/Listener）模式或从属者（Dependents）模式。</p>
+<p>2、模式分析：</p>
+<p>  观察者模式描述了如何建立对象与对象之间的依赖关系，如何构造满足这种需求的系统。<br>  这一模式中的关键对象是观察目标和观察者，一个目标可以有任意数目的与之相依赖的观察者，一旦目标的状态发生改变，所有的观察者都将得到通知。<br>  作为对这个通知的响应，每个观察者都将即时更新自己的状态，以与目标状态同步，这种交互也称为发布-订阅(publishsubscribe)。目标是通知的发布者，它发出通知时并不需要知道谁是它的观察者，可以有任意数目的观察者订阅它并接收通知。</p>
+<p>3、优缺点比较：</p>
+<p>优点：</p>
+<ul>
+<li>观察者模式可以实现表示层和数据逻辑层的分离，并定义了稳定的消息更新传递机制，抽象了更新接口，使得可以有各种各样不同的表示层作为具体观察者角色。</li>
+<li>观察者模式在观察目标和观察者之间建立一个抽象的耦合。</li>
+<li>观察者模式支持广播通信。</li>
+<li>观察者模式符合“开闭原则”的要求。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>如果一个观察目标对象有很多直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。</li>
+<li>如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。</li>
+<li>观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</li>
+</ul>
+<p>4、使用环境</p>
+<p>  观察者模式在软件开发中应用非常广泛，如某电子商务网站可以在执行发送操作后给用户多个发送商品打折信息，某团队战斗游戏中某队友牺牲将给所有成员提示等等，凡是涉及到一对一或者一对多的对象交互场景都可以使用观察者模式。</p>
+<p>5、具体实现：</p>
+<p>第一种解释：</p>
+<p>主题类也是被观察类（NewsPaperOfficeJava）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewsPaperOfficeJava</span> <span class="keyword">extends</span> <span class="title">Observable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String message;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> time = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendMessage</span><span class="params">()</span></span>&#123;</span><br><span class="line">        message = <span class="string">"第"</span>+time +<span class="string">"次发的新闻"</span>;</span><br><span class="line">        setChanged();</span><br><span class="line">        notifyObservers();</span><br><span class="line">        time++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.message = message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>2、清除缓存文件 db.json 和已生成的静态文件 public </p>
-<p> 进入hexo目录下的_post目录,如D:\Hexo\Blog\source_posts。输入命令hexo clean。</p>
-<p>3、生成网站静态文件到默认设置的 public 文件夹</p>
-<p>进入hexo目录下的_post目录,如D:\Hexo\Blog\source_posts。输入命令hexo  g。</p>
-<p>4、自动生成网站静态文件，并部署到设定的仓库</p>
-<p>进入hexo目录下的_post目录,如D:\Hexo\Blog\source_posts。输入命令hexo  d。</p>
-<p>总结：一般文档写完之后，直接连续使用 hexo clean、hexo  g和hexo  d进行发布。</p>
+<p>观察者的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FirstObserverJava</span> <span class="keyword">implements</span> <span class="title">Observer</span> </span>&#123;<span class="comment">//JAVA观察者实现</span></span><br><span class="line">    <span class="keyword">private</span> String message;</span><br><span class="line">    Observable mObservable;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(Observable o, Object arg)</span> </span>&#123;</span><br><span class="line">        mObservable = o;</span><br><span class="line">        <span class="keyword">if</span>(mObservable <span class="keyword">instanceof</span> NewsPaperOfficeJava)&#123;</span><br><span class="line">            message = <span class="string">"FirstObserver 收到了"</span> + ((NewsPaperOfficeJava) mObservable).getMessage();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>第二种解释：</p>
+<p>  举个栗子：假设有三个人，小美（女，22），小王和小李。小美很漂亮，小王和小李是两个程序猿，时刻关注着小美的一举一动。有一天，小美说了一句：“谁来陪我打游戏啊。”这句话被小王和小李听到了，结果乐坏了，蹭蹭蹭，没一会儿，小王就冲到小美家门口了，在这里，小美是被观察者，小王和小李是观察者，被观察者发出一条信息，然后观察者们进行相应的处理，看代码：</p>
+<p>发送消息接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">   <span class="comment">//小王和小李通过这个接口可以接收到小美发过来的消息</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">getMessage</span><span class="params">(String s)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  这个接口相当于小王和小李的电话号码，小美发送通知的时候就会拨打getMessage这个电话，拨打电话就是调用接口:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LaoWang</span> <span class="keyword">implements</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> String name = <span class="string">"小王"</span>;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">LaoWang</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getMessage</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">       System.out.println(name + <span class="string">"接到了小美打过来的电话，电话内容是："</span> + s);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LaoLi</span> <span class="keyword">implements</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> String name = <span class="string">"小李"</span>;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">LaoLi</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getMessage</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">       System.out.println(name + <span class="string">"接到了小美打过来的电话，电话内容是：-&gt;"</span> + s);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码很简单，我们再看看小美的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XiaoMei</span> </span>&#123;</span><br><span class="line">   List&lt;Person&gt; list = <span class="keyword">new</span> ArrayList&lt;Person&gt;();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">XiaoMei</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addPerson</span><span class="params">(Person person)</span></span>&#123;</span><br><span class="line">        list.add(person);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//遍历list，把自己的通知发送给所有暗恋自己的人</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyPerson</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(Person person:list)&#123;</span><br><span class="line">            person.getMessage(<span class="string">"你们过来吧，谁先过来谁就能陪我一起玩儿游戏!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">       XiaoMei xiao_mei = <span class="keyword">new</span> XiaoMei();</span><br><span class="line">       LaoWang lao_wang = <span class="keyword">new</span> LaoWang();</span><br><span class="line">       LaoLi lao_li = <span class="keyword">new</span> LaoLi();</span><br><span class="line"></span><br><span class="line">       <span class="comment">//小王和小李在小美那里都注册了一下</span></span><br><span class="line">       xiao_mei.addPerson(lao_wang);</span><br><span class="line">       xiao_mei.addPerson(lao_li);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//小美向小王和小李发送通知</span></span><br><span class="line">       xiao_mei.notifyPerson();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
 	  
@@ -232,7 +266,7 @@
     
     <br>
     <strong>本文链接：</strong>
-    <a rel="license" href="https://ritchie-j.github.io/2020/07/08/Hexo%E5%91%BD%E4%BB%A4/index.html">https://ritchie-j.github.io/2020/07/08/Hexo%E5%91%BD%E4%BB%A4/index.html</a>
+    <a rel="license" href="https://ritchie-j.github.io/2020/07/08/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/index.html">https://ritchie-j.github.io/2020/07/08/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/index.html</a>
     <br>
     <strong>版权声明：</strong>
     本作品采用
@@ -289,7 +323,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">开发工具使用</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
         		</li>
       		
 		</ul>
@@ -305,11 +339,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/工作/开发工具//" class="article-tag-list-link color5">开发工具</a>
+        			<a href="/categories/工作/java//" class="article-tag-list-link color5">java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="/categories/工作/开发工具/Hexo//" class="article-tag-list-link color5">Hexo</a>
+        			<a href="/categories/工作/java/设计模式//" class="article-tag-list-link color5">设计模式</a>
         		</li>
       		
 		</ul>
@@ -364,7 +398,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://ritchie-j.github.io/2020/07/08/Hexo%E5%91%BD%E4%BB%A4/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ritchie-j.github.io/2020/07/08/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -378,18 +412,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/07/08/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/07/08/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          单例模式详解
+          适配器模式详解
         
       </div>
     </a>
   
   
-    <a href="/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">阿里云K8S托管版配置及部署</div>
+    <a href="/2020/07/08/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">单例模式详解</div>
       <i class="icon-circle-right"></i>
     </a>
   
