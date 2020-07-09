@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>动态代理模式详解</title>
+    <url>/2020/07/09/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h4 id="一、动态代理的好处"><a href="#一、动态代理的好处" class="headerlink" title="一、动态代理的好处"></a>一、动态代理的好处</h4><p>  动态代理：其实动态代理与静态代理的本质一样，最终程序运行时都需要生成一个代理对象实例，通过它来完成相关增强以及业务逻辑，只不过静态代理需要硬编码的方式指定，而动态代理则是以动态方式生成代理(有编译时操作字节码生成的方式、以及运行时通过反射、字节码生成的方式)。动态生成的好处很明显，代理逻辑与业务逻辑是互相独立的，没有耦合，代理1个类100个类没有任何区别。</p>
+<a id="more"></a>
+
+<h4 id="二、动态代理例子（便于理解）"><a href="#二、动态代理例子（便于理解）" class="headerlink" title="二、动态代理例子（便于理解）"></a>二、动态代理例子（便于理解）</h4><p>  到了饭点了，有两个用户都需要买菜，小姜要买青菜，小鑫要买萝卜，他们下单，骑手接收到订单之后去到超时给他们买菜，并送给他们。其中：小姜、小鑫就是被代理对象，骑手就是代理对象，买菜就是代理的内容或者动作。</p>
+<h4 id="三、实现代码："><a href="#三、实现代码：" class="headerlink" title="三、实现代码："></a>三、实现代码：</h4><p>1、首先创建一个代理的动作或者内容：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 需要代理的内容或动作，如需要跑腿买东西</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Shop</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">shop</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2、创建两个需要买菜的用户（被代理对象）：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被代理对象小姜</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Jiang</span> <span class="keyword">implements</span> <span class="title">Shop</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"小姜下单买青菜"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被代理对象小鑫</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Xin</span> <span class="keyword">implements</span> <span class="title">Shop</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"小鑫下单买萝卜"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>3、创建一个骑手（创建代理对象）,他会根据被代理对象的不同，买不同的菜：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 代理对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExpressMan</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Object object;</span><br><span class="line"></span><br><span class="line">    ExpressMan(Object object) &#123;</span><br><span class="line">        <span class="keyword">this</span>.object = object;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"骑手接到订单"</span>);</span><br><span class="line">        <span class="comment">//通过反射根据传入的被代理对象，匹配相应的方法（代理内容或动作）</span></span><br><span class="line">        Object invoke = method.invoke(object, args);</span><br><span class="line">        System.out.println(<span class="string">"送达"</span>);</span><br><span class="line">        <span class="keyword">return</span> invoke;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>4、写一个测试类，开始下单买菜：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      User user = <span class="keyword">new</span> User();</span><br><span class="line">      <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 参数1：通过对象引用获取类加载器</span></span><br><span class="line"><span class="comment">       * 参数2：通过对象引用反射获取对象所有接口</span></span><br><span class="line"><span class="comment">       * 参数3：代理对象（被代理的对象）</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">      Shop shop = (Shop)Proxy.newProxyInstance(user.getClass().getClassLoader(), user.getClass().getInterfaces(), <span class="keyword">new</span> ExpressMan(user));</span><br><span class="line">      shop.shop();</span><br><span class="line"></span><br><span class="line">      User2 user2 = <span class="keyword">new</span> User2();</span><br><span class="line">      Shop shop2 = (Shop)Proxy.newProxyInstance(user.getClass().getClassLoader(), user.getClass().getInterfaces(), <span class="keyword">new</span> ExpressMan(user2));</span><br><span class="line">      shop2.shop();</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>5、运行结果：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">骑手接到订单</span><br><span class="line">小姜下单买青菜</span><br><span class="line">送达</span><br><span class="line"></span><br><span class="line">骑手接到订单</span><br><span class="line">小鑫下单买萝卜</span><br><span class="line">送达</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>工作</category>
+        <category>java</category>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>阿里云K8S托管版配置及部署</title>
     <url>/2020/07/08/%E9%98%BF%E9%87%8C%E4%BA%91K8S%E6%89%98%E7%AE%A1%E7%89%88%E9%85%8D%E7%BD%AE%E5%8F%8A%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><p>kubernetes官方文档：<a href="https://kubernetes.io/docs/home/" target="_blank" rel="noopener">https://kubernetes.io/docs/home/</a><br>kubernates中文文档：<a href="http://docs.kubernetes.org.cn/" target="_blank" rel="noopener">http://docs.kubernetes.org.cn/</a><br>阿里云容器服务k8s版文档：<a href="https://help.aliyun.com/product/85222.html?spm=a2c4g.11186623.6.540.6c874c078ZtIcw" target="_blank" rel="noopener">https://help.aliyun.com/product/85222.html?spm=a2c4g.11186623.6.540.6c874c078ZtIcw</a></p>
