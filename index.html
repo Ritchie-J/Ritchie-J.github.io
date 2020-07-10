@@ -218,36 +218,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h4 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h4><p>  简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类 的实例。属于创建型模式，但它不属于 GOF，23 种设计模式。</p>
-<h4 id="二、适用场景"><a href="#二、适用场景" class="headerlink" title="二、适用场景"></a>二、适用场景</h4><p>1、适用 于工厂类负责创建的对象较少的场景，</p>
-<p>2、且客户端只需要传入工厂类的参数，对于如何创 建对象的逻辑不需要关心。</p>
-<h4 id="三、作用"><a href="#三、作用" class="headerlink" title="三、作用"></a>三、作用</h4><p>根据不同的情景（参数）创建不同的对象。</p>
-<h4 id="四、缺点"><a href="#四、缺点" class="headerlink" title="四、缺点"></a>四、缺点</h4><p>1、工厂类的职业相对过重，增加新的产品时需要修改工厂类的判断逻辑，违背开闭原则。</p>
-<p>2、不易于扩展过于复杂的产品结构。</p>
-<h4 id="五、代码实现（示例）"><a href="#五、代码实现（示例）" class="headerlink" title="五、代码实现（示例）"></a>五、代码实现（示例）</h4><p>1、示例背景：一个时间管理者拥有多个女朋友，那么他要记住每个女朋友的名字，每天晚上根据名字去微信找到她们，给她们每个人发晚安，或者叫她们来侍寝。</p>
-<p>2、创建每个对象需要做的事</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">CreateObject</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">createObject</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>3、首先创建两个女朋友</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReBa</span> <span class="keyword">implements</span> <span class="title">CreateObject</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createObject</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"我是迪丽热巴，我来啦"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NaZha</span> <span class="keyword">implements</span> <span class="title">CreateObject</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createObject</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"我是古力娜扎，我来啦"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>4、创建一个工厂（相当于微信，通过微信管理她们）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GirlFriendFactory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">CreateObject <span class="title">createGirlFriendWay1</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"迪丽热巴"</span>.equals(name)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ReBa();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"古力娜扎"</span>.equals(name))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> NaZha();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">CreateObject <span class="title">createGirlFriendWay2</span><span class="params">(Class clazz)</span> <span class="keyword">throws</span> IllegalAccessException, InstantiationException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (CreateObject) clazz.newInstance();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>5、写个测试类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InstantiationException, IllegalAccessException </span>&#123;</span><br><span class="line">        GirlFriendFactory girlFriendFactory = <span class="keyword">new</span> GirlFriendFactory();</span><br><span class="line">        CreateObject reBa = girlFriendFactory.createGirlFriendWay1(<span class="string">"迪丽热巴"</span>);</span><br><span class="line">        reBa.createObject();</span><br><span class="line"></span><br><span class="line">        CreateObject naZha = girlFriendFactory.createGirlFriendWay2(NaZha<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        naZha.createObject();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>6、测试结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">我是迪丽热巴，我来啦</span><br><span class="line">我是古力娜扎，我来啦</span><br></pre></td></tr></table></figure>
-
-
+        
       
 	  
 	  
@@ -1653,6 +1624,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">开发工具使用</a>
               </li>
              
@@ -1665,19 +1640,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Docker</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">电脑操作</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">单元测试</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">电脑操作</a>
               </li>
              
               <li class="article-tag-list-item">

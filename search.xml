@@ -4,6 +4,8 @@
     <title>简单工厂模式详解</title>
     <url>/2020/07/10/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<h4 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h4><p>  简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类 的实例。属于创建型模式，但它不属于 GOF，23 种设计模式。</p>
+<a id="more"></a>
+
 <h4 id="二、适用场景"><a href="#二、适用场景" class="headerlink" title="二、适用场景"></a>二、适用场景</h4><p>1、适用 于工厂类负责创建的对象较少的场景，</p>
 <p>2、且客户端只需要传入工厂类的参数，对于如何创 建对象的逻辑不需要关心。</p>
 <h4 id="三、作用"><a href="#三、作用" class="headerlink" title="三、作用"></a>三、作用</h4><p>根据不同的情景（参数）创建不同的对象。</p>
